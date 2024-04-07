@@ -7,6 +7,7 @@ import { Text as DefaultText, View as DefaultView, SafeAreaView as DefaultSafeAr
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from './useColorScheme';
+import useTheme from '@/hooks/useTheme';
 
 type ThemeProps = {
   lightColor?: string;
@@ -21,7 +22,7 @@ export function useThemeColor(
   props: { light?: string; dark?: string },
   colorName: keyof typeof Colors.light & keyof typeof Colors.dark
 ) {
-  const theme = useColorScheme() ?? 'light';
+  const { currentColorScheme:theme } = useTheme();
   const colorFromProps = props[theme];
 
   if (colorFromProps) {

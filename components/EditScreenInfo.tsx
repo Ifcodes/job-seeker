@@ -1,13 +1,17 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { ExternalLink } from './ExternalLink';
 import { MonoText } from './StyledText';
-import { Text, View } from './Themed';
+import { Text, View, useThemeColor } from './Themed';
 
 import Colors from '@/constants/Colors';
+import { Link, useRouter } from 'expo-router';
+import useTheme from '@/hooks/useTheme';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  const router = useRouter()
+  const { changeTheme } = useTheme()
   return (
     <View>
       <View style={styles.getStartedContainer}>
@@ -22,7 +26,16 @@ export default function EditScreenInfo({ path }: { path: string }) {
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           darkColor="rgba(255,255,255,0.05)"
           lightColor="rgba(0,0,0,0.05)">
-          <MonoText>{path}</MonoText>
+          <MonoText style={{}}>{path}</MonoText>
+          <TouchableOpacity style={styles.profileBtn} onPress={() => router.push('/home')}>
+            <Text>See Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.profileBtn} onPress={() => changeTheme('light')}>
+            <Text>Light</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.profileBtn} onPress={() => changeTheme('dark')}>
+            <Text>Dark</Text>
+          </TouchableOpacity>
         </View>
 
         <Text
@@ -74,4 +87,15 @@ const styles = StyleSheet.create({
   helpLinkText: {
     textAlign: 'center',
   },
+  profileBtn: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderBlockColor: 'rgba(255, 255, 255, 0.7)',
+    marginTop: 16,
+    display: 'flex',
+    alignItems: 'center',
+    paddingTop: 8,
+    paddingBottom: 8,
+    width: 100 
+  }
 });

@@ -6,6 +6,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { useColorScheme } from '@/components/useColorScheme';
+import { useThemeColor } from '@/components/Themed';
+import useTheme from '@/hooks/useTheme';
+import { Platform, StatusBar } from 'react-native';
+import Home from './home';
+import HomeLayout from './home/_layout';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,13 +50,13 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const {currentColorScheme, statusBarTheme} = useTheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={currentColorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <StatusBar barStyle={statusBarTheme } />
       <Stack>
-        {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
-        {/* <Stack.Screen name="modal" options={{ presentation: 'transparentModal', gestureDirection: 'vertical' }} /> */}
+        <Stack.Screen name='home' />
       </Stack>
     </ThemeProvider>
   );
